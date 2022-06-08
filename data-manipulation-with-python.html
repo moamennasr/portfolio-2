@@ -1,0 +1,467 @@
+<!DOCTYPE HTML>
+
+
+
+
+<html>
+	<head>
+		<title>Moamen Nasr Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="icon" href="favicon.ico">
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>Go Back</strong> </a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about-me.html">About Me</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>data manipulation with python.</h1>
+									</header>
+                                   <p>Cleaning & Filtering cars dataset for all car models is Asia, Europe & USA</p>
+                                        <br>
+                                        <a href="https://github.com/moamennasr/data-manipulation-with-python/blob/main/python%20portfolio%20project%20%232%20cars%20dataset.ipynb" target="_blank" class="button next">View On Github</a>
+									<br>
+									<br>
+									<h1>Code</h1>
+									<h2># first let's import the nessary libraries</h2>
+									<pre><code>
+import pandas as pd
+import numpy as np
+</code></pre>
+
+<h2># let's get our data</h2>
+<pre><code>
+df = pd.read_csv("Cars Data1.csv")
+df
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+0	Acura	MDX	SUV	Asia	All	$36,945	$33,337	3.5	6.0	265.0	17.0	23.0	4451.0	106.0	189.0
+1	Acura	RSX Type S 2dr	Sedan	Asia	Front	$23,820	$21,761	2.0	4.0	200.0	24.0	31.0	2778.0	101.0	172.0
+2	Acura	TSX 4dr	Sedan	Asia	Front	$26,990	$24,647	2.4	4.0	200.0	22.0	29.0	3230.0	105.0	183.0
+3	Acura	TL 4dr	Sedan	Asia	Front	$33,195	$30,299	3.2	6.0	270.0	20.0	28.0	3575.0	108.0	186.0
+4	Acura	3.5 RL 4dr	Sedan	Asia	Front	$43,755	$39,014	3.5	6.0	225.0	18.0	24.0	3880.0	115.0	197.0
+...	...	...	...	...	...	...	...	...	...	...	...	...	...	...	...
+427	Volvo	C70 LPT convertible 2dr	Sedan	Europe	Front	$40,565	$38,203	2.4	5.0	197.0	21.0	28.0	3450.0	105.0	186.0
+428	Volvo	C70 HPT convertible 2dr	Sedan	Europe	Front	$42,565	$40,083	2.3	5.0	242.0	20.0	26.0	3450.0	105.0	186.0
+429	Volvo	S80 T6 4dr	Sedan	Europe	Front	$45,210	$42,573	2.9	6.0	268.0	19.0	26.0	3653.0	110.0	190.0
+430	Volvo	V40	Wagon	Europe	Front	$26,135	$24,641	1.9	4.0	170.0	22.0	29.0	2822.0	101.0	180.0
+431	Volvo	XC70	Wagon	Europe	All	$35,145	$33,112	2.5	5.0	208.0	20.0	27.0	3823.0	109.0	186.0
+432 rows × 15 columns
+</code></pre>
+
+<h2># let's see if there is any missing values</h2>
+<pre><code>
+pd.set_option('display.max_row', 5)
+for col in df.columns:
+    p = np.mean(df[col].isnull())
+    print("{} - {}%".format(df[col], round(p*100, 2)))
+
+0      Acura
+1      Acura
+       ...
+430    Volvo
+431    Volvo
+Name: Make, Length: 432, dtype: object - 0.93%
+0                 MDX
+1      RSX Type S 2dr
+            ...
+430               V40
+431              XC70
+Name: Model, Length: 432, dtype: object - 0.93%
+0        SUV
+1      Sedan
+       ...
+430    Wagon
+431    Wagon
+Name: Type, Length: 432, dtype: object - 0.93%
+0        Asia
+1        Asia
+        ...
+430    Europe
+431    Europe
+Name: Origin, Length: 432, dtype: object - 0.93%
+0        All
+1      Front
+       ...
+430    Front
+431      All
+Name: DriveTrain, Length: 432, dtype: object - 0.93%
+0      $36,945
+1      $23,820
+         ...
+430    $26,135
+431    $35,145
+Name: MSRP, Length: 432, dtype: object - 0.93%
+0      $33,337
+1      $21,761
+         ...
+430    $24,641
+431    $33,112
+Name: Invoice, Length: 432, dtype: object - 0.93%
+0      3.5
+1      2.0
+      ...
+430    1.9
+431    2.5
+Name: EngineSize, Length: 432, dtype: float64 - 0.93%
+0      6.0
+1      4.0
+      ...
+430    4.0
+431    5.0
+Name: Cylinders, Length: 432, dtype: float64 - 1.39%
+0      265.0
+1      200.0
+       ...
+430    170.0
+431    208.0
+Name: Horsepower, Length: 432, dtype: float64 - 0.93%
+0      17.0
+1      24.0
+       ...
+430    22.0
+431    20.0
+Name: MPG_City, Length: 432, dtype: float64 - 0.93%
+0      23.0
+1      31.0
+       ...
+430    29.0
+431    27.0
+Name: MPG_Highway, Length: 432, dtype: float64 - 0.93%
+0      4451.0
+1      2778.0
+        ...
+430    2822.0
+431    3823.0
+Name: Weight, Length: 432, dtype: float64 - 0.93%
+0      106.0
+1      101.0
+       ...
+430    101.0
+431    109.0
+Name: Wheelbase, Length: 432, dtype: float64 - 0.93%
+0      189.0
+1      172.0
+       ...
+430    180.0
+431    186.0
+Name: Length, Length: 432, dtype: float64 - 0.93%
+</code></pre>
+
+<h2># all of them have null value so let's count them by simply</h2>
+<pre><code>
+df.isnull().sum()
+
+Make           4
+Model          4
+Type           4
+Origin         4
+DriveTrain     4
+MSRP           4
+Invoice        4
+EngineSize     4
+Cylinders      6
+Horsepower     4
+MPG_City       4
+MPG_Highway    4
+Weight         4
+Wheelbase      4
+Length         4
+dtype: int64
+</code></pre>
+<pre><code>
+df.head(1)
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+0	Acura	MDX	SUV	Asia	All	$36,945	$33,337	3.5	6.0	265.0	17.0	23.0	4451.0	106.0	189.0
+</code></pre>
+<pre><code>
+df[df["Make"].isnull()]
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+30	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN
+39	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN
+161	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN
+173	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN
+</code></pre>
+<pre><code>
+df["Cylinders"] = df["Cylinders"].fillna(df["Cylinders"].mean())
+df[df["Make"].isnull()]
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+30	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	5.807512	NaN	NaN	NaN	NaN	NaN	NaN
+39	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	5.807512	NaN	NaN	NaN	NaN	NaN	NaN
+161	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	5.807512	NaN	NaN	NaN	NaN	NaN	NaN
+173	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	5.807512	NaN	NaN	NaN	NaN	NaN	NaN
+</code></pre>
+<pre><code>
+df = df.dropna()
+df
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+0	Acura	MDX	SUV	Asia	All	$36,945	$33,337	3.5	6.0	265.0	17.0	23.0	4451.0	106.0	189.0
+1	Acura	RSX Type S 2dr	Sedan	Asia	Front	$23,820	$21,761	2.0	4.0	200.0	24.0	31.0	2778.0	101.0	172.0
+2	Acura	TSX 4dr	Sedan	Asia	Front	$26,990	$24,647	2.4	4.0	200.0	22.0	29.0	3230.0	105.0	183.0
+3	Acura	TL 4dr	Sedan	Asia	Front	$33,195	$30,299	3.2	6.0	270.0	20.0	28.0	3575.0	108.0	186.0
+4	Acura	3.5 RL 4dr	Sedan	Asia	Front	$43,755	$39,014	3.5	6.0	225.0	18.0	24.0	3880.0	115.0	197.0
+...	...	...	...	...	...	...	...	...	...	...	...	...	...	...	...
+427	Volvo	C70 LPT convertible 2dr	Sedan	Europe	Front	$40,565	$38,203	2.4	5.0	197.0	21.0	28.0	3450.0	105.0	186.0
+428	Volvo	C70 HPT convertible 2dr	Sedan	Europe	Front	$42,565	$40,083	2.3	5.0	242.0	20.0	26.0	3450.0	105.0	186.0
+429	Volvo	S80 T6 4dr	Sedan	Europe	Front	$45,210	$42,573	2.9	6.0	268.0	19.0	26.0	3653.0	110.0	190.0
+430	Volvo	V40	Wagon	Europe	Front	$26,135	$24,641	1.9	4.0	170.0	22.0	29.0	2822.0	101.0	180.0
+431	Volvo	XC70	Wagon	Europe	All	$35,145	$33,112	2.5	5.0	208.0	20.0	27.0	3823.0	109.0	186.0
+428 rows × 15 columns
+</code></pre>
+
+<h2># four empty rows removed and two empty Cylinders coulmns filled with the average</h2>
+<pre><code>
+pd.set_option('display.max_row', 38)
+df.isnull().sum()
+
+Make           0
+Model          0
+Type           0
+Origin         0
+DriveTrain     0
+MSRP           0
+Invoice        0
+EngineSize     0
+Cylinders      0
+Horsepower     0
+MPG_City       0
+MPG_Highway    0
+Weight         0
+Wheelbase      0
+Length         0
+dtype: int64
+df["Make"].value_counts()
+Toyota           28
+Chevrolet        27
+Mercedes-Benz    26
+Ford             23
+BMW              20
+Audi             19
+Honda            17
+Nissan           17
+Volkswagen       15
+Chrysler         15
+Dodge            13
+Mitsubishi       13
+Volvo            12
+Jaguar           12
+Hyundai          12
+Subaru           11
+Pontiac          11
+Mazda            11
+Lexus            11
+Kia              11
+Buick             9
+Mercury           9
+Lincoln           9
+Saturn            8
+Cadillac          8
+Suzuki            8
+Infiniti          8
+GMC               8
+Acura             7
+Porsche           7
+Saab              7
+Land Rover        3
+Oldsmobile        3
+Jeep              3
+Scion             2
+Isuzu             2
+MINI              2
+Hummer            1
+Name: Make, dtype: int64
+pd.set_option('display.max_row', 15)
+</code></pre>
+<pre><code>
+df.head(1)
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+0	Acura	MDX	SUV	Asia	All	$36,945	$33,337	3.5	6.0	265.0	17.0	23.0	4451.0	106.0	189.0
+</code></pre>
+<pre><code>
+df[["Cylinders", "Horsepower", "MPG_City", "MPG_Highway", "Weight", "Wheelbase", "Length"]] = df[["Cylinders", "Horsepower", "MPG_City", "MPG_Highway", "Weight", "Wheelbase", "Length"]].astype("int64")
+</code></pre>
+<pre><code>
+df.head()
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+0	Acura	MDX	SUV	Asia	All	$36,945	$33,337	3.5	6	265	17	23.0	4451	106	189
+1	Acura	RSX Type S 2dr	Sedan	Asia	Front	$23,820	$21,761	2.0	4	200	24	31.0	2778	101	172
+2	Acura	TSX 4dr	Sedan	Asia	Front	$26,990	$24,647	2.4	4	200	22	29.0	3230	105	183
+3	Acura	TL 4dr	Sedan	Asia	Front	$33,195	$30,299	3.2	6	270	20	28.0	3575	108	186
+4	Acura	3.5 RL 4dr	Sedan	Asia	Front	$43,755	$39,014	3.5	6	225	18	24.0	3880	115	197
+</code></pre>
+<pre><code>
+df["Origin"].value_counts()
+
+Asia      158
+USA       147
+Europe    123
+Name: Origin, dtype: int64
+</code></pre>
+
+<h2># filtering ; show all the data where the origin is asia or europe</h2>
+<pre><code>
+new_data = df[df["Origin"].isin(["Asia" or "Europe"])]
+new_data
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+0	Acura	MDX	SUV	Asia	All	$36,945	$33,337	3.5	6	265	17	23	4451	106	189
+1	Acura	RSX Type S 2dr	Sedan	Asia	Front	$23,820	$21,761	2.0	4	200	24	31	2778	101	172
+2	Acura	TSX 4dr	Sedan	Asia	Front	$26,990	$24,647	2.4	4	200	22	29	3230	105	183
+3	Acura	TL 4dr	Sedan	Asia	Front	$33,195	$30,299	3.2	6	270	20	28	3575	108	186
+4	Acura	3.5 RL 4dr	Sedan	Asia	Front	$43,755	$39,014	3.5	6	225	18	24	3880	115	197
+...	...	...	...	...	...	...	...	...	...	...	...	...	...	...	...
+400	Toyota	MR2 Spyder convertible 2dr	Sports	Asia	Rear	$25,130	$22,787	1.8	4	138	26	32	2195	97	153
+401	Toyota	Tacoma	Truck	Asia	Rear	$12,800	$11,879	2.4	4	142	22	27	2750	103	191
+402	Toyota	Tundra Regular Cab V6	Truck	Asia	Rear	$16,495	$14,978	3.4	6	190	16	18	3925	128	218
+403	Toyota	Tundra Access Cab V6 SR5	Truck	Asia	All	$25,935	$23,520	3.4	6	190	14	17	4435	128	218
+404	Toyota	Matrix XR	Wagon	Asia	Front	$16,695	$15,156	1.8	4	130	29	36	2679	102	171
+158 rows × 15 columns
+</code></pre>
+<pre><code>
+df[(df["Weight"]> 4000)]
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+0	Acura	MDX	SUV	Asia	All	$36,945	$33,337	3.5	6	265	17	23	4451	106	189
+15	Audi	A4 3.0 Quattro convertible 2dr	Sedan	Europe	All	$44,240	$40,075	3.0	6	220	18	25	4013	105	180
+17	Audi	A6 4.2 Quattro 4dr	Sedan	Europe	All	$49,690	$44,936	4.2	8	300	17	24	4024	109	193
+18	Audi	A8 L Quattro 4dr	Sedan	Europe	All	$69,190	$64,740	4.2	8	330	17	24	4399	121	204
+20	Audi	RS 6 4dr	Sports	Europe	Front	$84,600	$76,417	4.2	8	450	15	22	4024	109	191
+...	...	...	...	...	...	...	...	...	...	...	...	...	...	...	...
+405	Volkswagen	Touareg V6	SUV	Europe	All	$35,515	$32,243	3.2	6	220	15	20	5086	112	187
+415	Volkswagen	Phaeton 4dr	Sedan	Europe	Front	$65,000	$59,912	4.2	8	335	16	22	5194	118	204
+416	Volkswagen	Phaeton W12 4dr	Sedan	Europe	Front	$75,000	$69,130	6.0	12	420	12	19	5399	118	204
+419	Volkswagen	Passat W8	Wagon	Europe	Front	$40,235	$36,956	4.0	8	270	18	25	4067	106	184
+420	Volvo	XC90 T6	SUV	Europe	All	$41,250	$38,851	2.9	6	268	15	20	4638	113	189
+103 rows × 15 columns
+</code></pre>
+<pre><code>
+df[~(df["Weight"]> 4000)]
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+1	Acura	RSX Type S 2dr	Sedan	Asia	Front	$23,820	$21,761	2.0	4	200	24	31	2778	101	172
+2	Acura	TSX 4dr	Sedan	Asia	Front	$26,990	$24,647	2.4	4	200	22	29	3230	105	183
+3	Acura	TL 4dr	Sedan	Asia	Front	$33,195	$30,299	3.2	6	270	20	28	3575	108	186
+4	Acura	3.5 RL 4dr	Sedan	Asia	Front	$43,755	$39,014	3.5	6	225	18	24	3880	115	197
+5	Acura	3.5 RL w/Navigation 4dr	Sedan	Asia	Front	$46,100	$41,100	3.5	6	225	18	24	3893	115	197
+...	...	...	...	...	...	...	...	...	...	...	...	...	...	...	...
+427	Volvo	C70 LPT convertible 2dr	Sedan	Europe	Front	$40,565	$38,203	2.4	5	197	21	28	3450	105	186
+428	Volvo	C70 HPT convertible 2dr	Sedan	Europe	Front	$42,565	$40,083	2.3	5	242	20	26	3450	105	186
+429	Volvo	S80 T6 4dr	Sedan	Europe	Front	$45,210	$42,573	2.9	6	268	19	26	3653	110	190
+430	Volvo	V40	Wagon	Europe	Front	$26,135	$24,641	1.9	4	170	22	29	2822	101	180
+431	Volvo	XC70	Wagon	Europe	All	$35,145	$33,112	2.5	5	208	20	27	3823	109	186
+325 rows × 15 columns
+</code></pre>
+<h2># let's increase the values of the coulmn "MPG_Highway" by 3</h2>
+<pre><code>
+df["MPG_City"] = df["MPG_City"].apply(lambda x:x+3)
+</code></pre>
+<pre><code>
+df
+
+Make	Model	Type	Origin	DriveTrain	MSRP	Invoice	EngineSize	Cylinders	Horsepower	MPG_City	MPG_Highway	Weight	Wheelbase	Length
+0	Acura	MDX	SUV	Asia	All	$36,945	$33,337	3.5	6	265	20	23	4451	106	189
+1	Acura	RSX Type S 2dr	Sedan	Asia	Front	$23,820	$21,761	2.0	4	200	27	31	2778	101	172
+2	Acura	TSX 4dr	Sedan	Asia	Front	$26,990	$24,647	2.4	4	200	25	29	3230	105	183
+3	Acura	TL 4dr	Sedan	Asia	Front	$33,195	$30,299	3.2	6	270	23	28	3575	108	186
+4	Acura	3.5 RL 4dr	Sedan	Asia	Front	$43,755	$39,014	3.5	6	225	21	24	3880	115	197
+...	...	...	...	...	...	...	...	...	...	...	...	...	...	...	...
+427	Volvo	C70 LPT convertible 2dr	Sedan	Europe	Front	$40,565	$38,203	2.4	5	197	24	28	3450	105	186
+428	Volvo	C70 HPT convertible 2dr	Sedan	Europe	Front	$42,565	$40,083	2.3	5	242	23	26	3450	105	186
+429	Volvo	S80 T6 4dr	Sedan	Europe	Front	$45,210	$42,573	2.9	6	268	22	26	3653	110	190
+430	Volvo	V40	Wagon	Europe	Front	$26,135	$24,641	1.9	4	170	25	29	2822	101	180
+431	Volvo	XC70	Wagon	Europe	All	$35,145	$33,112	2.5	5	208	23	27	3823	109	186
+428 rows × 15 columns
+									</code></pre>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section class="split">
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-envelope"></span>
+										<h3>Email</h3>
+										<p><a>admin@moamen-nasr.com</a></p>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-phone"></span>
+										<h3>Phone</h3>
+										<p><a>(+20)1032160486</a></p>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-home"></span>
+										<h3>Address</h3>
+										<span>alexandria, egypt</span>
+									</div>
+								</section>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://twitter.com/MomenNasr6" class="icon brands fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+									<li><a href="https://www.facebook.com/momen.nasr2021/" class="icon brands fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
+									<li><a href="https://www.instagram.com/moamen_diwan/" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+									<li><a href="https://github.com/moamennasr" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+								<li><a href="https://www.linkedin.com/in/moamen-ahmed-8884a21b2/" class="icon brands alt fa-linkedin-in" target="_blank"><span class="label">LinkedIn</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Moamen Nasr</li><li>Resume: <a href="https://moamennasr.github.io/resume-web-page/" target="_blank">moamennasr</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

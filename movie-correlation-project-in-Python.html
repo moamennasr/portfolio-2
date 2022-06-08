@@ -1,0 +1,450 @@
+<!DOCTYPE HTML>
+
+
+
+
+<html>
+	<head>
+		<title>Moamen Nasr Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="icon" href="favicon.ico">
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>Go Back</strong> </a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about-me.html">About Me</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>movie correlation project in Python.</h1>
+									</header>
+
+                                   <p>Trying to find a correlation between budget, votes & company or maybe other factors.</p>
+									<br>
+									<a href="https://github.com/moamennasr/data-analysis-portfolio/blob/main/movie%20correlation%20project%201.ipynb" target="_blank" class="button next">View On Github</a>
+									<br>
+									<br>
+									<h1>Code</h1>
+									<h2># Import Necessary Libraries</h2>
+													<pre><code>
+import pandas as pd
+
+import matplotlib
+import seaborn as sns
+import numpy as np
+
+import matplotlib.pyplot as plt
+plt.style.use("ggplot")
+
+%matplotlib inline
+
+from matplotlib.pyplot import figure
+matplotlib.rcParams["figure.figsize"] = (12, 8) #Adjusts The Configuration of the Plot We Will Create
+</code></pre>
+									<h2># let's get the data</h2>
+<pre><code>
+df = pd.read_csv("movies.csv")
+</code></pre>
+									<h2>#let's look at the data</h2>
+<pre><code>
+df.head()
+
+name	rating	genre	year	released	score	votes	director	writer	star	country	budget	gross	company	runtime
+0	The Shining	R	Drama	1980	June 13, 1980 (United States)	8.4	927000.0	Stanley Kubrick	Stephen King	Jack Nicholson	United Kingdom	19000000.0	46998772.0	Warner Bros.	146.0
+1	The Blue Lagoon	R	Adventure	1980	July 2, 1980 (United States)	5.8	65000.0	Randal Kleiser	Henry De Vere Stacpoole	Brooke Shields	United States	4500000.0	58853106.0	Columbia Pictures	104.0
+2	Star Wars: Episode V - The Empire Strikes Back	PG	Action	1980	June 20, 1980 (United States)	8.7	1200000.0	Irvin Kershner	Leigh Brackett	Mark Hamill	United States	18000000.0	538375067.0	Lucasfilm	124.0
+3	Airplane!	PG	Comedy	1980	July 2, 1980 (United States)	7.7	221000.0	Jim Abrahams	Jim Abrahams	Robert Hays	United States	3500000.0	83453539.0	Paramount Pictures	88.0
+4	Caddyshack	R	Comedy	1980	July 25, 1980 (United States)	7.3	108000.0	Harold Ramis	Brian Doyle-Murray	Chevy Chase	United States	6000000.0	39846344.0	Orion Pictures	98.0
+</code></pre>
+	<h2># let's see if there is any missing data</h2>
+<pre><code>
+for col in df.columns:
+    p = np.mean(df[col].isnull())
+    print("{} - {}%".format(col, round(p*100, 2)))
+
+name - 2.03%
+rating - 1.0%
+genre - 0.0%
+year - 0.0%
+released - 0.03%
+score - 0.04%
+votes - 0.0%
+director - 0.0%
+writer - 0.04%
+star - 0.01%
+country - 0.04%
+budget - 0.0%
+gross - 0.0%
+company - 0.22%
+runtime - 0.0%
+</code></pre>
+			<h2># let's see the data types for columns</h2>
+<pre><code>
+	df.dtypes
+
+name         object
+rating       object
+genre        object
+year          int64
+released     object
+score       float64
+votes       float64
+director     object
+writer       object
+star         object
+country      object
+budget      float64
+gross       float64
+company      object
+runtime     float64
+dtype: object
+</code></pre>
+									<h2># let's change  'NA' to '0'</h2>
+<pre><code>
+df["budget"] = df["budget"].fillna(0)
+
+df["votes"] = df["votes"].fillna(0)
+
+df["gross"] = df["gross"].fillna(0)
+
+df["runtime"] = df["runtime"].fillna(0)
+</code></pre>
+									<h2># changing data type of columns</h2>
+<pre><code>
+df["budget"] = df["budget"].astype("int64")
+
+df["votes"] = df["votes"].astype("int64")
+
+df["gross"] = df["gross"].astype("int64")
+
+df["runtime"] = df["runtime"].astype("int64")
+df
+name	rating	genre	year	released	score	votes	director	writer	star	country	budget	gross	company	runtime
+5445	Avatar	PG-13	Action	2009	2009-12-18	7.8	1100000	James Cameron	James Cameron	Sam Worthington	United States	237000000	2847246203	Twentieth Century Fox	162
+7445	Avengers: Endgame	PG-13	Action	2019	2019-04-26	8.4	903000	Anthony Russo	Christopher Markus	Robert Downey Jr.	United States	356000000	2797501328	Marvel Studios	181
+3045	Titanic	PG-13	Drama	1997	1997-12-19	7.8	1100000	James Cameron	James Cameron	Leonardo DiCaprio	United States	200000000	2201647264	Twentieth Century Fox	194
+6663	Star Wars: Episode VII - The Force Awakens	PG-13	Action	2015	2015-12-18	7.8	876000	J.J. Abrams	Lawrence Kasdan	Daisy Ridley	United States	245000000	2069521700	Lucasfilm	138
+7244	Avengers: Infinity War	PG-13	Action	2018	2018-04-27	8.4	897000	Anthony Russo	Christopher Markus	Robert Downey Jr.	United States	321000000	2048359754	Marvel Studios	149
+...	...	...	...	...	...	...	...	...	...	...	...	...	...	...	...
+1617	Mortal Passions	R	Crime	1990	1990-01-26	4.5	274	Andrew Lane	Alan Moskowitz	Zach Galligan	United States	0	0	Gibraltar Entertainment	92
+1614	Edge of Sanity	R	Horror	1989	1989-04-14	5.2	1300	Gérard Kikoïne	J.P. Félix	Anthony Perkins	United Kingdom	0	0	Allied Vision	85
+1606	I, Madman	R	Fantasy	1989	1989-04-07	6.0	2900	Tibor Takács	David Chaskin	Jenny Wright	Canada	0	0	Trans World Entertainment (TWE)	89
+1601	My Twentieth Century	NaN	Comedy	1990	1990-01-13	7.1	1500	Ildikó Enyedi	Ildikó Enyedi	Dorota Segda	Hungary	0	0	Budapest Stúdió Vállalat	104
+7667	Tee em el	NaN	Horror	2020	2020-08-19	5.7	7	Pereko Mosia	Pereko Mosia	Siyabonga Mabaso	South Africa	0	0	PK 65 Films	102
+7668 rows × 15 columns
+</code></pre>
+<pre><code>
+df = df.sort_values(by=["gross"], inplace=False, ascending=False)
+</code></pre>
+									<h2># adjusts what i see</h2>
+<pre><code>
+pd.set_option('display.max_row', None)
+pd.set_option('display.max_row', 12)
+</code></pre>
+									<h2># modifying the column 'released' by removing the country name</h2>
+<pre><code>
+df["released"] = df["released"].str.split("(").str.get(0)
+0      1980-06-13
+1      1980-07-02
+2      1980-06-20
+3      1980-07-02
+4      1980-07-25
+          ...
+7663   2020-10-23
+7664   2020-02-07
+7665   2020-04-27
+7666   2020-10-01
+7667   2020-08-19
+Name: released, Length: 7668, dtype: datetime64[ns]
+</code></pre>
+									<h2># change the date formate</h2>
+<pre><code>
+df["released"] = pd.to_datetime(df["released"])
+</code></pre>
+									<h2># correct the year column</h2>
+<pre><code>
+df["year"] = df["released"].astype(str).str[:4]
+</code></pre>
+									<h2># Drop Ay Doplicates</h2>
+<pre><code>
+df["name"] = df["name"].drop_duplicates().sort_values(ascending=False)
+</code></pre>
+
+<h2>--there is no duplicates<br>
+--budget high correlation<br>
+	--company high correlation</h2>
+<pre><code>
+df.boxplot(column=['gross']) ---------------------------
+</code></pre>
+<pre><code>
+CompanyGrossSum = df.groupby(['company'])[["gross"]].sum()
+
+CompanyGrossSumSorted = CompanyGrossSum.sort_values(['gross','company'], ascending = False)[:15]
+
+CompanyGrossSumSorted = CompanyGrossSumSorted['gross'].astype('int64')
+CompanyGrossSumSorted
+
+company
+Warner Bros.                 56491421806
+Universal Pictures           52514188890
+Columbia Pictures            43008941346
+Paramount Pictures           40493607415
+Twentieth Century Fox        40257053857
+Walt Disney Pictures         36327887792
+New Line Cinema              19883797684
+Marvel Studios               15065592411
+DreamWorks Animation         11873612858
+Touchstone Pictures          11795832638
+Dreamworks Pictures          11635441081
+Metro-Goldwyn-Mayer (MGM)     9230230105
+Summit Entertainment          8373718838
+Pixar Animation Studios       7886344526
+Fox 2000 Pictures             7443502667
+Name: gross, dtype: int64
+</code></pre>
+<pre><code>
+sns.regplot(x="score", y="gross", data=df, scatter_kws={"color":"green"}, line_kws={"color":"red"}) --------------
+</code></pre>
+									<h2># scater plot with budget vs gross rev.</h2>
+<pre><code>
+plt.scatter(x=df["budget"], y=df["gross"])
+
+plt.title("Budget vs Gross Earnings")
+
+plt.xlabel("Film Budget")
+
+plt.ylabel("Gross Earnings") -------------------------------
+
+</code></pre>
+									<h2># plot budget vs Gross using seaborn</h2>
+<pre><code>
+sns.regplot(x="budget", y="gross", data=df, scatter_kws={"color":"blue"}, line_kws={"color":"red"}) ------------
+</code></pre>
+									<h2># let's start looking at correlation</h2>
+<pre><code>
+df.corr(method="pearson") # pearson, kendall, spearman
+
+score	votes	budget	gross	runtime
+score	1.000000	0.409182	0.055665	0.186392	0.398387
+votes	0.409182	1.000000	0.486931	0.632870	0.306984
+budget	0.055665	0.486931	1.000000	0.750157	0.268372
+gross	0.186392	0.632870	0.750157	1.000000	0.244339
+runtime	0.398387	0.306984	0.268372	0.244339	1.000000
+</code></pre>
+<pre><code>
+correlation_matrix = df.corr(method="pearson") ------------------------
+
+sns.heatmap(correlation_matrix, annot=True)
+
+plt.title("Correlation matrix for Movies")
+
+plt.xlabel("Movie features")
+
+plt.ylabel("Movie features")
+</code></pre>
+<pre><code>
+df_numerized = df
+df_numerized
+
+name	rating	genre	year	released	score	votes	director	writer	star	country	budget	gross	company	runtime
+0	The Shining	R	Drama	1980	June 13, 1980 (United States)	8.4	927000.0	Stanley Kubrick	Stephen King	Jack Nicholson	United Kingdom	19000000.0	46998772.0	Warner Bros.	146.0
+1	The Blue Lagoon	R	Adventure	1980	July 2, 1980 (United States)	5.8	65000.0	Randal Kleiser	Henry De Vere Stacpoole	Brooke Shields	United States	4500000.0	58853106.0	Columbia Pictures	104.0
+2	Star Wars: Episode V - The Empire Strikes Back	PG	Action	1980	June 20, 1980 (United States)	8.7	1200000.0	Irvin Kershner	Leigh Brackett	Mark Hamill	United States	18000000.0	538375067.0	Lucasfilm	124.0
+3	Airplane!	PG	Comedy	1980	July 2, 1980 (United States)	7.7	221000.0	Jim Abrahams	Jim Abrahams	Robert Hays	United States	3500000.0	83453539.0	Paramount Pictures	88.0
+4	Caddyshack	R	Comedy	1980	July 25, 1980 (United States)	7.3	108000.0	Harold Ramis	Brian Doyle-Murray	Chevy Chase	United States	6000000.0	39846344.0	Orion Pictures	98.0
+...	...	...	...	...	...	...	...	...	...	...	...	...	...	...	...
+7663	More to Life	NaN	Drama	2020	October 23, 2020 (United States)	3.1	18.0	Joseph Ebanks	Joseph Ebanks	Shannon Bond	United States	7000.0	NaN	NaN	90.0
+7664	Dream Round	NaN	Comedy	2020	February 7, 2020 (United States)	4.7	36.0	Dusty Dukatz	Lisa Huston	Michael Saquella	United States	NaN	NaN	Cactus Blue Entertainment	90.0
+7665	Saving Mbango	NaN	Drama	2020	April 27, 2020 (Cameroon)	5.7	29.0	Nkanya Nkwai	Lynno Lovert	Onyama Laura	United States	58750.0	NaN	Embi Productions	NaN
+7666	It's Just Us	NaN	Drama	2020	October 1, 2020 (United States)	NaN	NaN	James Randall	James Randall	Christina Roz	United States	15000.0	NaN	NaN	120.0
+7667	Tee em el	NaN	Horror	2020	August 19, 2020 (United States)	5.7	7.0	Pereko Mosia	Pereko Mosia	Siyabonga Mabaso	South Africa	NaN	NaN	PK 65 Films	102.0
+7668 rows × 15 columns
+</code></pre>
+<pre><code>
+for col_name in df_numerized.columns:
+    if(df_numerized[col_name].dtype == 'object'):
+        df_numerized[col_name]= df_numerized[col_name].astype('category')
+        df_numerized[col_name] = df_numerized[col_name].cat.codes
+ </code></pre>
+	<h2># i can use df.apply(lambda x: x.factorize()[0]).corr()</h2>
+<pre><code>
+correlation_matrix = df_numerized.corr(method='pearson') --------------------
+
+sns.heatmap(correlation_matrix, annot = True)
+
+plt.title("Correlation matrix for Movies")
+
+plt.xlabel("Movie features")
+
+plt.ylabel("Movie features")
+Text(87.0, 0.5, 'Movie features')
+
+correlation_mat = df_numerized.corr()
+correlation_mat
+
+name	rating	genre	year	released	score	votes	director	writer	star	country	budget	gross	company	runtime
+name	1.000000	-0.008069	0.016355	0.011453	-0.011311	0.017097	0.013088	0.009079	0.009081	0.006472	-0.010737	0.023970	0.005533	0.009211	0.010392
+rating	-0.008069	1.000000	0.072423	0.008779	0.016613	-0.001314	0.033225	0.019483	-0.005921	0.013405	0.081244	-0.176002	-0.107339	-0.032943	0.062145
+genre	0.016355	0.072423	1.000000	-0.081261	0.029822	0.027965	-0.145307	-0.015258	0.006567	-0.005477	-0.037615	-0.356564	-0.235650	-0.071067	-0.052711
+year	0.011453	0.008779	-0.081261	1.000000	-0.000695	0.097995	0.222945	-0.020795	-0.008656	-0.027242	-0.070938	0.329321	0.257486	-0.010431	0.120811
+released	-0.011311	0.016613	0.029822	-0.000695	1.000000	0.042788	0.016097	-0.001478	-0.002404	0.015777	-0.020427	0.014683	0.001659	-0.010474	0.000868
+...	...	...	...	...	...	...	...	...	...	...	...	...	...	...	...
+country	-0.010737	0.081244	-0.037615	-0.070938	-0.020427	-0.133348	0.073625	0.017490	0.015343	-0.012998	1.000000	0.054063	0.092129	0.095548	-0.078412
+budget	0.023970	-0.176002	-0.356564	0.329321	0.014683	0.076254	0.442429	-0.012272	-0.039451	-0.019589	0.054063	1.000000	0.740395	0.173214	0.320447
+gross	0.005533	-0.107339	-0.235650	0.257486	0.001659	0.186258	0.630757	-0.014441	-0.023519	-0.002717	0.092129	0.740395	1.000000	0.154840	0.245216
+company	0.009211	-0.032943	-0.071067	-0.010431	-0.010474	0.001030	0.133204	0.004404	0.005646	0.012442	0.095548	0.173214	0.154840	1.000000	0.034402
+runtime	0.010392	0.062145	-0.052711	0.120811	0.000868	0.399451	0.309212	0.017624	-0.003511	0.010174	-0.078412	0.320447	0.245216	0.034402	1.000000
+15 rows × 15 columns
+</code></pre>
+<pre><code>
+corr_pair = correlation_mat.unstack()
+corr_pair
+
+name     name        1.000000
+         rating     -0.008069
+         genre       0.016355
+         year        0.011453
+         released   -0.011311
+                       ...
+runtime  country    -0.078412
+         budget      0.320447
+         gross       0.245216
+         company     0.034402
+         runtime     1.000000
+Length: 225, dtype: float64
+</code></pre>
+
+<pre><code>
+pd.set_option('display.max_row', 20)
+sorted_pairs = corr_pair.sort_values()
+sorted_pairs
+
+budget   genre     -0.356564
+genre    budget    -0.356564
+         gross     -0.235650
+gross    genre     -0.235650
+rating   budget    -0.176002
+                      ...
+year     year       1.000000
+genre    genre      1.000000
+rating   rating     1.000000
+company  company    1.000000
+runtime  runtime    1.000000
+Length: 225, dtype: float64
+</code></pre>
+<pre><code>
+high_corr = sorted_pairs[(sorted_pairs)> 0.5]
+high_corr
+
+gross     votes       0.630757
+votes     gross       0.630757
+budget    gross       0.740395
+gross     budget      0.740395
+name      name        1.000000
+director  director    1.000000
+gross     gross       1.000000
+budget    budget      1.000000
+country   country     1.000000
+star      star        1.000000
+writer    writer      1.000000
+votes     votes       1.000000
+score     score       1.000000
+released  released    1.000000
+year      year        1.000000
+genre     genre       1.000000
+rating    rating      1.000000
+company   company     1.000000
+runtime   runtime     1.000000
+dtype: float64
+</code></pre>
+									<h2># budget and votes have the highest correlation to gross earnings<br>
+# company has low correlatoin</h2>
+                                        <br>
+                                        <br>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section class="split">
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-envelope"></span>
+										<h3>Email</h3>
+										<p><a>admin@moamen-nasr.com</a></p>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-phone"></span>
+										<h3>Phone</h3>
+										<p><a>(+20)1032160486</a></p>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-home"></span>
+										<h3>Address</h3>
+										<span>alexandria, egypt</span>
+									</div>
+								</section>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://twitter.com/MomenNasr6" class="icon brands fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+									<li><a href="https://www.facebook.com/momen.nasr2021/" class="icon brands fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
+									<li><a href="https://www.instagram.com/moamen_diwan/" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+									<li><a href="https://github.com/moamennasr" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+								<li><a href="https://www.linkedin.com/in/moamen-ahmed-8884a21b2/" class="icon brands alt fa-linkedin-in" target="_blank"><span class="label">LinkedIn</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Moamen Nasr</li><li>Resume: <a href="https://moamennasr.github.io/resume-web-page/" target="_blank">moamennasr</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

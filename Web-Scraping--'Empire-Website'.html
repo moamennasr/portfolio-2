@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+
+
+
+
+<html>
+	<head>
+		<title>Moamen Nasr Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="icon" href="favicon.ico">
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>Go Back</strong> </a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about-me.html">About Me</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>Web-Scraping "Empire Website.</h1>
+									</header>
+
+                                   <p>Web scraping Empire's 100 Greatest Movies Of All Time.</p>
+									<br>
+									<a href="https://github.com/moamennasr/web-scraping-Empire-website-/blob/main/main.py" target="_blank" class="button next">View On Github</a>
+									<br>
+									<br>
+									<h1>Code</h1>
+													<pre><code>import requests
+from bs4 import BeautifulSoup
+</code></pre>
+														<pre><code>
+URL = "https://web.archive.org/web/20200518073855/https://www.empireonline.com/movies/features/best-movies-2/"
+
+response = requests.get(url=URL)
+text = response.text
+soup = BeautifulSoup(text, "html.parser")
+
+file = open("100_best_movies.txt", "w")
+article_titles = [title.getText() for title in soup.find_all(name="h3", class_="title")]
+article_titles = article_titles[::-1]
+for title in article_titles:
+    file.write(f"{title}\n")
+
+</code></pre>
+                                        <br>
+
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section class="split">
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-envelope"></span>
+										<h3>Email</h3>
+										<p><a>admin@moamen-nasr.com</a></p>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-phone"></span>
+										<h3>Phone</h3>
+										<p><a>(+20)1032160486</a></p>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-home"></span>
+										<h3>Address</h3>
+										<span>alexandria, egypt</span>
+									</div>
+								</section>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://twitter.com/MomenNasr6" class="icon brands fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+									<li><a href="https://www.facebook.com/momen.nasr2021/" class="icon brands fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
+									<li><a href="https://www.instagram.com/moamen_diwan/" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+									<li><a href="https://github.com/moamennasr" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+								<li><a href="https://www.linkedin.com/in/moamen-ahmed-8884a21b2/" class="icon brands alt fa-linkedin-in" target="_blank"><span class="label">LinkedIn</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Moamen Nasr</li><li>Resume: <a href="https://moamennasr.github.io/resume-web-page/" target="_blank">moamennasr</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
