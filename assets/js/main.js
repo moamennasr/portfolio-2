@@ -1,6 +1,4 @@
-/*
-	remove inspect option
-*/
+/* remove inspect option */
 
 document.onkeydown = function(e) {
 if(event.keyCode == 123) {
@@ -71,6 +69,7 @@ if (document.addEventListener) {
     });
 }
 
+/* end of remove inspect option code */
 
 
 
