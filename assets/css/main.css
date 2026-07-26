@@ -1812,6 +1812,10 @@ input, select, textarea {
 		}
 
 	}
+/* Remove the underline from header.major */
+	header.major.no-underline > :first-child:after {
+   	 	display: none !important;
+	}
 
 /* Form */
 
